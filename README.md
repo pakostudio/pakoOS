@@ -1,6 +1,18 @@
-# PAKO OS
+# PAKO OS v2 — Admin Ready
 
-Command Center personal listo para GitHub Pages.
+Sistema personal de favoritos y Command Center listo para GitHub Pages.
+
+## Qué incluye
+
+- Fondo claro estilo Apple / Linear.
+- Buscador global.
+- Panel Admin.
+- Agregar favoritos.
+- Editar favoritos.
+- Eliminar favoritos.
+- Exportar respaldo JSON.
+- Importar favoritos de Chrome.
+- Datos base en `links.json`.
 
 ## Archivos
 
@@ -8,12 +20,13 @@ Command Center personal listo para GitHub Pages.
 - `style.css`
 - `app.js`
 - `links.json`
+- `README.md`
 
 ## Subir a GitHub Pages
 
-1. Crea un repositorio en GitHub llamado `pako-os`.
-2. Sube estos 4 archivos a la raíz del repositorio.
-3. Entra a `Settings`.
+1. Crea un repositorio llamado `pako-os`.
+2. Sube todos los archivos a la raíz del repositorio.
+3. En GitHub entra a `Settings`.
 4. Entra a `Pages`.
 5. En `Build and deployment`, selecciona:
    - Source: `Deploy from a branch`
@@ -25,30 +38,28 @@ Tu sitio quedará en:
 
 `https://TU-USUARIO.github.io/pako-os/`
 
-## Editar o agregar links
+## Cómo agregar, editar o eliminar links
 
-Abre `links.json`.
+Dentro de PAKO OS:
 
-Cada acceso tiene esta estructura:
+1. Clic en `Panel Admin`.
+2. Agrega, edita o elimina favoritos.
+3. Los cambios se guardan en tu navegador con `localStorage`.
 
-```json
-{
-  "name": "Nombre del acceso",
-  "url": "https://ejemplo.com",
-  "category": "Marketing & contenido",
-  "tag": "Descripción corta",
-  "favorite": false
-}
-```
+## Importante sobre GitHub Pages
 
-Categorías recomendadas:
+Los cambios hechos desde el Panel Admin se guardan localmente en tu navegador.
 
-- Operación diaria
-- Clientes & proyectos
-- IA & productividad
-- Marketing & contenido
-- Webs & tecnología
-- Administración
-- Archivo inteligente
+Para hacerlos permanentes en GitHub:
 
-Guarda el cambio y GitHub Pages lo actualizará automáticamente.
+1. En Panel Admin, clic en `Exportar respaldo JSON`.
+2. Descarga el archivo.
+3. Renómbralo como `links.json`.
+4. Súbelo a GitHub reemplazando el archivo anterior.
+
+## Importar favoritos de Chrome
+
+1. Exporta tus favoritos desde Chrome como `.html`.
+2. En PAKO OS, entra a `Panel Admin`.
+3. Usa `Importar favoritos de Chrome`.
+4. PAKO OS detecta duplicados y agrega solo nuevos enlaces.

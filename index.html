@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PAKO OS</title>
-  <meta name="description" content="PAKO OS Command Center">
+  <title>PAKO OS v2</title>
+  <meta name="description" content="PAKO OS Command Center con Panel Admin">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,9 +17,12 @@
           <h1 id="brandTitle">PAKO OS</h1>
         </div>
       </div>
-      <div class="timebox">
-        <span id="dateText">Hoy</span>
-        <strong id="timeText">--:--</strong>
+      <div class="top-actions">
+        <button id="adminBtn" class="btn primary">Panel Admin</button>
+        <div class="timebox">
+          <span id="dateText">Hoy</span>
+          <strong id="timeText">--:--</strong>
+        </div>
       </div>
     </header>
 
@@ -27,21 +30,21 @@
       <div>
         <p id="subtitle" class="subtitle">Command Center</p>
         <div class="search-wrap">
-          <span>⌘</span>
+          <span>⌘K</span>
           <input id="search" placeholder="Buscar: GPC, Shopify, Canva, MeetGeek, SAT, Drive..." autocomplete="off">
         </div>
       </div>
       <aside class="metrics">
-        <div><span>Links</span><strong id="totalLinks">0</strong></div>
+        <div><span>Links activos</span><strong id="totalLinks">0</strong></div>
         <div><span>Categorías</span><strong id="totalCategories">0</strong></div>
-        <div><span>Modo</span><strong>Focus</strong></div>
+        <div><span>Sistema</span><strong>v2</strong></div>
       </aside>
     </section>
 
     <section class="quick">
       <div class="section-title">
         <h2>Accesos rápidos</h2>
-        <p>Lo que debe abrir en un clic.</p>
+        <p>Operación de un clic.</p>
       </div>
       <div id="quickActions" class="quick-grid"></div>
     </section>
@@ -56,9 +59,67 @@
 
     <footer>
       <span id="tagline">Where strategy becomes perception</span>
-      <span>PAKO OS v2.0 · GitHub Pages Ready</span>
+      <span>PAKO OS v2.0 · Admin Ready</span>
     </footer>
   </div>
+
+  <dialog id="adminModal" class="modal">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow">CONTROL ROOM</p>
+        <h2>Panel Admin</h2>
+      </div>
+      <button id="closeAdmin" class="icon-btn">Cerrar</button>
+    </div>
+
+    <div class="admin-grid">
+      <section class="admin-panel">
+        <h3 id="formTitle">Agregar favorito</h3>
+        <form id="linkForm">
+          <input type="hidden" id="linkId">
+          <label>Nombre<input id="nameInput" required placeholder="Ej. Shopify PRO KICKS"></label>
+          <label>URL<input id="urlInput" required placeholder="https://..."></label>
+          <label>Categoría
+            <select id="categoryInput">
+              <option>Operación diaria</option>
+              <option>Clientes & proyectos</option>
+              <option>IA & productividad</option>
+              <option>Marketing & contenido</option>
+              <option>Webs & tecnología</option>
+              <option>Administración</option>
+              <option>Archivo inteligente</option>
+            </select>
+          </label>
+          <label>Etiqueta<input id="tagInput" placeholder="Ej. CRM, Ecommerce, Facturación"></label>
+          <div class="form-row">
+            <button class="btn primary" type="submit">Guardar</button>
+            <button class="btn ghost" type="button" id="resetForm">Limpiar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="admin-panel">
+        <h3>Importar / Exportar</h3>
+        <div class="stack">
+          <label class="file-drop">
+            Importar favoritos de Chrome (.html)
+            <input type="file" id="bookmarkImport" accept=".html,.htm">
+          </label>
+          <button class="btn" id="exportBackup">Exportar respaldo JSON</button>
+          <button class="btn danger" id="resetLocal">Restaurar versión original</button>
+          <small>Nota: los cambios se guardan en tu navegador. Para dejarlos permanentes en GitHub, exporta el respaldo y reemplaza links.json.</small>
+        </div>
+      </section>
+    </div>
+
+    <section class="admin-list-wrap">
+      <div class="section-title">
+        <h3>Favoritos actuales</h3>
+        <input id="adminSearch" placeholder="Filtrar dentro del admin...">
+      </div>
+      <div id="adminList" class="admin-list"></div>
+    </section>
+  </dialog>
 
   <script src="app.js"></script>
 </body>
