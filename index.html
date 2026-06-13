@@ -249,6 +249,39 @@
       background: var(--danger-soft);
       border-color: rgba(180,35,24,.15);
     }
+    .btn-rename {
+      background: none;
+      border: 1.5px solid transparent;
+      border-radius: 9px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      transition: all .16s;
+      opacity: 0;
+    }
+    .fav-item:hover .btn-rename { opacity: 1; }
+    .btn-rename:hover {
+      background: #f0eadf;
+      border-color: rgba(181,138,42,.25);
+      color: var(--gold);
+    }
+    .fav-name-input {
+      border: 1.5px solid rgba(181,138,42,.5);
+      background: #fffdf7;
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      width: 100%;
+      min-width: 120px;
+    }
 
     /* ── EMPTY ── */
     .empty {
@@ -547,6 +580,7 @@ function render() {
             </div>
           </a>
           <div class="fav-actions">
+            <button class="btn-rename" data-rename="${esc(l.id)}" title="Renombrar">✏️</button>
             <a class="btn-open" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">↗ Abrir</a>
             <button class="btn-del" data-del="${esc(l.id)}" title="Eliminar">✕</button>
           </div>
@@ -562,18 +596,78 @@ document.getElementById('search').addEventListener('input', e => {
   render();
 });
 
-// Delete
+// Delete & Rename
 document.getElementById('list').addEventListener('click', e => {
-  const id = e.target.dataset.del;
-  if (!id) return;
+  // Delete
+  const delId = e.target.dataset.del;
+  if (delId) {
+    const link = links.find(l => l.id === delId);
+    if (!link) return;
+    if (!confirm(`Eliminar "${link.name}" de favoritos?`)) return;
+    links = links.filter(l => l.id !== delId);
+    save(links);
+    render();
+    showToast(`"${link.name}" eliminado`, true);
+    return;
+  }
+
+  // Rename via button
+  const renameId = e.target.dataset.rename;
+  if (renameId) {
+    e.preventDefault();
+    startRename(renameId);
+  }
+});
+
+// Double-click on name to rename
+document.getElementById('list').addEventListener('dblclick', e => {
+  const nameEl = e.target.closest('.fav-name');
+  if (!nameEl) return;
+  const item = nameEl.closest('.fav-item');
+  if (!item) return;
+  e.preventDefault();
+  startRename(item.dataset.id);
+});
+
+function startRename(id) {
   const link = links.find(l => l.id === id);
   if (!link) return;
-  if (!confirm(`Eliminar "${link.name}" de favoritos?`)) return;
-  links = links.filter(l => l.id !== id);
-  save(links);
-  render();
-  showToast(`"${link.name}" eliminado`, true);
-});
+
+  const item = document.querySelector(`.fav-item[data-id="${id}"]`);
+  if (!item) return;
+  const nameEl = item.querySelector('.fav-name');
+  if (!nameEl || nameEl.querySelector('input')) return; // ya está editando
+
+  const original = link.name;
+  const input = document.createElement('input');
+  input.className = 'fav-name-input';
+  input.value = original;
+  nameEl.textContent = '';
+  nameEl.appendChild(input);
+  input.focus();
+  input.select();
+
+  function commitRename() {
+    const newName = input.value.trim();
+    if (newName && newName !== original) {
+      link.name = newName;
+      save(links);
+      showToast(`Renombrado a "${newName}"`);
+      render(); // re-render para reordenar si aplica
+    } else {
+      nameEl.textContent = original;
+    }
+  }
+
+  input.addEventListener('blur', commitRename);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+    if (e.key === 'Escape') {
+      input.removeEventListener('blur', commitRename);
+      nameEl.textContent = original;
+    }
+  });
+}
 
 // Modal
 const modal = document.getElementById('addModal');
