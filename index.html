@@ -31,9 +31,9 @@
     }
 
     .shell {
-      width: min(820px, calc(100% - 36px));
+      width: min(1180px, calc(100% - 28px));
       margin: auto;
-      padding: 36px 0 60px;
+      padding: 24px 0 34px;
     }
 
     /* ── HEADER ── */
@@ -41,7 +41,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 32px;
+      margin-bottom: 20px;
     }
     .brand {
       display: flex;
@@ -140,30 +140,28 @@
     }
     .btn-add:hover { opacity: .88; transform: translateY(-1px); }
 
-    /* ── LETRAS ── */
-    .letter-group { margin-bottom: 4px; }
-    .letter-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--gold);
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      padding: 18px 0 8px 4px;
+    /* ── TABLERO COMPACTO ── */
+    #list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 10px;
+      align-items: stretch;
     }
 
-    /* ── ITEM ── */
+    /* ── TARJETA ── */
     .fav-item {
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 12px;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto;
+      align-items: stretch;
+      gap: 10px;
+      min-height: 118px;
       background: var(--panel);
       border: 1.5px solid var(--line);
-      border-radius: 14px;
-      padding: 13px 16px;
-      margin-bottom: 7px;
+      border-radius: 16px;
+      padding: 12px;
       transition: border-color .18s, box-shadow .18s, transform .18s;
+      min-width: 0;
     }
     .fav-item:hover {
       border-color: rgba(181,138,42,.35);
@@ -173,15 +171,16 @@
     .fav-link {
       text-decoration: none;
       color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 11px;
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      align-items: start;
+      gap: 10px;
       min-width: 0;
     }
     .fav-favicon {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
       background: var(--bg);
       border: 1px solid var(--line);
       display: grid;
@@ -196,32 +195,35 @@
       object-fit: contain;
     }
     .fav-name {
-      font-size: 14px;
-      font-weight: 600;
-      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
     .fav-domain {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-top: 2px;
+      margin-top: 4px;
     }
     .fav-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: flex-end;
+      gap: 6px;
       flex-shrink: 0;
     }
     .btn-open {
       background: rgba(24,38,66,.06);
       border: none;
       border-radius: 9px;
-      padding: 7px 12px;
+      padding: 7px 9px;
       font-family: 'DM Mono', monospace;
       font-size: 11px;
       font-weight: 500;
@@ -427,11 +429,17 @@
       font-family: 'DM Mono', monospace;
     }
 
+    @media (max-width: 900px) {
+      #list { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+    }
     @media (max-width: 600px) {
-      .shell { padding: 22px 0 40px; }
+      .shell { width: min(100% - 18px, 1180px); padding: 18px 0 32px; }
       .header { flex-wrap: wrap; gap: 10px; }
-      .fav-item { grid-template-columns: 1fr; }
-      .fav-actions { justify-content: flex-end; }
+      .toolbar { flex-direction: column; }
+      .btn-add { justify-content: center; min-height: 44px; }
+      #list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .fav-item { min-height: 112px; padding: 10px; }
+      .btn-rename { opacity: 1; }
     }
   </style>
 </head>
@@ -552,40 +560,22 @@ function render() {
     return;
   }
 
-  // Group by first letter
-  const groups = {};
-  sorted.forEach(l => {
-    const letter = norm(l.name[0]).toUpperCase().replace(/[^A-Z]/, '#');
-    (groups[letter] ||= []).push(l);
-  });
-
-  const letterOrder = Object.keys(groups).sort((a, b) => {
-    if (a === '#') return 1;
-    if (b === '#') return -1;
-    return a.localeCompare(b);
-  });
-
-  el.innerHTML = letterOrder.map(letter => `
-    <div class="letter-group">
-      <div class="letter-label">${letter}</div>
-      ${groups[letter].map(l => `
-        <div class="fav-item" data-id="${esc(l.id)}">
-          <a class="fav-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">
-            <div class="fav-favicon">
-              <img src="${esc(getFaviconUrl(l.url))}" alt="" loading="lazy" onerror="this.style.display='none'">
-            </div>
-            <div>
-              <div class="fav-name">${esc(l.name)}</div>
-              <div class="fav-domain">${esc(getDomain(l.url))}</div>
-            </div>
-          </a>
-          <div class="fav-actions">
-            <button class="btn-rename" data-rename="${esc(l.id)}" title="Renombrar">✏️</button>
-            <a class="btn-open" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">↗ Abrir</a>
-            <button class="btn-del" data-del="${esc(l.id)}" title="Eliminar">✕</button>
-          </div>
+  el.innerHTML = sorted.map(l => `
+    <div class="fav-item" data-id="${esc(l.id)}">
+      <a class="fav-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">
+        <div class="fav-favicon">
+          <img src="${esc(getFaviconUrl(l.url))}" alt="" loading="lazy" onerror="this.style.display='none'">
         </div>
-      `).join('')}
+        <div>
+          <div class="fav-name">${esc(l.name)}</div>
+          <div class="fav-domain">${esc(getDomain(l.url))}</div>
+        </div>
+      </a>
+      <div class="fav-actions">
+        <button class="btn-rename" data-rename="${esc(l.id)}" title="Renombrar">✏️</button>
+        <a class="btn-open" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">↗</a>
+        <button class="btn-del" data-del="${esc(l.id)}" title="Eliminar">✕</button>
+      </div>
     </div>
   `).join('');
 }
