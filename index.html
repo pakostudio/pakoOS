@@ -5,28 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PAKO OS · Favoritos</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap');
-
     :root {
-      --bg: #f7f5f0;
+      --bg: #eef6fb;
       --panel: #ffffff;
       --text: #171717;
-      --muted: #77736b;
-      --line: #e7e1d7;
-      --gold: #b58a2a;
-      --blue: #182642;
+      --muted: #607282;
+      --line: #d8e7f1;
+      --gold: #9a7a2f;
+      --blue: #183b56;
       --danger: #b42318;
       --danger-soft: #fdf0ef;
       --radius: 20px;
-      --shadow: 0 8px 40px rgba(24,38,66,.07);
+      --shadow: 0 8px 40px rgba(24,59,86,.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--bg);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,.85), transparent 32%),
+        linear-gradient(135deg, #eef6fb 0%, #e7f2f8 48%, #f6fbff 100%);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       min-height: 100vh;
     }
 
@@ -62,7 +62,7 @@
       flex-shrink: 0;
     }
     .brand-text .eyebrow {
-      font-family: 'DM Mono', monospace;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 10px;
       font-weight: 500;
       letter-spacing: .18em;
@@ -71,14 +71,14 @@
       margin-bottom: 2px;
     }
     .brand-text h1 {
-      font-family: 'DM Serif Display', serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 26px;
       letter-spacing: -.02em;
       line-height: 1;
       color: var(--blue);
     }
     .count-badge {
-      font-family: 'DM Mono', monospace;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       background: rgba(24,38,66,.07);
       border-radius: 999px;
@@ -107,12 +107,12 @@
       border-radius: 14px;
       padding: 13px 16px 13px 42px;
       font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
       outline: none;
       transition: border-color .2s;
     }
-    .search-box input:focus { border-color: rgba(181,138,42,.5); }
+    .search-box input:focus { border-color: rgba(24,91,130,.35); }
     .search-box .ico {
       position: absolute;
       left: 14px;
@@ -131,7 +131,7 @@
       color: #fff;
       border: none;
       border-radius: 14px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-weight: 700;
       font-size: 14px;
       cursor: pointer;
@@ -164,7 +164,7 @@
       min-width: 0;
     }
     .fav-item:hover {
-      border-color: rgba(181,138,42,.35);
+      border-color: rgba(24,91,130,.28);
       box-shadow: var(--shadow);
       transform: translateY(-1px);
     }
@@ -204,7 +204,7 @@
       overflow: hidden;
     }
     .fav-domain {
-      font-family: 'DM Mono', monospace;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 10px;
       color: var(--muted);
       white-space: nowrap;
@@ -224,7 +224,7 @@
       border: none;
       border-radius: 9px;
       padding: 7px 9px;
-      font-family: 'DM Mono', monospace;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 11px;
       font-weight: 500;
       color: var(--blue);
@@ -267,17 +267,17 @@
     }
     .fav-item:hover .btn-rename { opacity: 1; }
     .btn-rename:hover {
-      background: #f0eadf;
-      border-color: rgba(181,138,42,.25);
+      background: #e5f1f8;
+      border-color: rgba(24,91,130,.22);
       color: var(--gold);
     }
     .fav-name-input {
-      border: 1.5px solid rgba(181,138,42,.5);
-      background: #fffdf7;
+      border: 1.5px solid rgba(24,91,130,.35);
+      background: #f7fbfe;
       border-radius: 8px;
       padding: 3px 8px;
       font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-weight: 700;
       color: var(--text);
       outline: none;
@@ -314,7 +314,7 @@
       margin-bottom: 22px;
     }
     .modal-head h2 {
-      font-family: 'DM Serif Display', serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-size: 22px;
       color: var(--blue);
     }
@@ -354,12 +354,12 @@
       border-radius: 12px;
       padding: 12px 14px;
       font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
       outline: none;
       transition: border-color .2s;
     }
-    .form-field input:focus { border-color: rgba(181,138,42,.5); background: #fff; }
+    .form-field input:focus { border-color: rgba(24,91,130,.35); background: #fff; }
     .form-actions {
       display: flex;
       gap: 10px;
@@ -372,7 +372,7 @@
       color: #fff;
       border: none;
       border-radius: 13px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-weight: 700;
       font-size: 14px;
       cursor: pointer;
@@ -384,7 +384,7 @@
       background: rgba(0,0,0,.05);
       border: none;
       border-radius: 13px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
@@ -426,7 +426,7 @@
       justify-content: space-between;
       color: var(--muted);
       font-size: 12px;
-      font-family: 'DM Mono', monospace;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     @media (max-width: 900px) {
