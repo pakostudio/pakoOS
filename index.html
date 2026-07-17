@@ -481,8 +481,8 @@
 <dialog id="addModal">
   <div class="modal-head">
     <div>
-      <h2>Nuevo favorito</h2>
-      <p>Se agrega ordenado automáticamente A–Z</p>
+      <h2 id="modalTitle">Nuevo favorito</h2>
+      <p id="modalSubtitle">Se agrega ordenado automáticamente A–Z</p>
     </div>
     <button class="btn-close" id="closeModal">✕</button>
   </div>
@@ -572,7 +572,7 @@ function render() {
         </div>
       </a>
       <div class="fav-actions">
-        <button class="btn-rename" data-rename="${esc(l.id)}" title="Renombrar">✏️</button>
+        <button class="btn-rename" data-rename="${esc(l.id)}" title="Editar nombre y enlace">✏️</button>
         <a class="btn-open" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">↗</a>
         <button class="btn-del" data-del="${esc(l.id)}" title="Eliminar">✕</button>
       </div>
@@ -586,9 +586,8 @@ document.getElementById('search').addEventListener('input', e => {
   render();
 });
 
-// Delete & Rename
+// Delete & Editar
 document.getElementById('list').addEventListener('click', e => {
-  // Delete
   const delId = e.target.dataset.del;
   if (delId) {
     const link = links.find(l => l.id === delId);
@@ -601,72 +600,52 @@ document.getElementById('list').addEventListener('click', e => {
     return;
   }
 
-  // Rename via button
-  const renameId = e.target.dataset.rename;
-  if (renameId) {
+  const editId = e.target.dataset.rename;
+  if (editId) {
     e.preventDefault();
-    startRename(renameId);
+    openEditModal(editId);
   }
 });
 
-// Double-click on name to rename
+// Doble clic en el nombre también abre la edición completa
 document.getElementById('list').addEventListener('dblclick', e => {
   const nameEl = e.target.closest('.fav-name');
   if (!nameEl) return;
   const item = nameEl.closest('.fav-item');
   if (!item) return;
   e.preventDefault();
-  startRename(item.dataset.id);
+  openEditModal(item.dataset.id);
 });
-
-function startRename(id) {
-  const link = links.find(l => l.id === id);
-  if (!link) return;
-
-  const item = document.querySelector(`.fav-item[data-id="${id}"]`);
-  if (!item) return;
-  const nameEl = item.querySelector('.fav-name');
-  if (!nameEl || nameEl.querySelector('input')) return; // ya está editando
-
-  const original = link.name;
-  const input = document.createElement('input');
-  input.className = 'fav-name-input';
-  input.value = original;
-  nameEl.textContent = '';
-  nameEl.appendChild(input);
-  input.focus();
-  input.select();
-
-  function commitRename() {
-    const newName = input.value.trim();
-    if (newName && newName !== original) {
-      link.name = newName;
-      save(links);
-      showToast(`Renombrado a "${newName}"`);
-      render(); // re-render para reordenar si aplica
-    } else {
-      nameEl.textContent = original;
-    }
-  }
-
-  input.addEventListener('blur', commitRename);
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
-    if (e.key === 'Escape') {
-      input.removeEventListener('blur', commitRename);
-      nameEl.textContent = original;
-    }
-  });
-}
 
 // Modal
 const modal = document.getElementById('addModal');
-document.getElementById('openAdd').addEventListener('click', () => {
+let editingId = null;
+
+function openAddModal() {
+  editingId = null;
+  document.getElementById('modalTitle').textContent = 'Nuevo favorito';
+  document.getElementById('modalSubtitle').textContent = 'Se agrega ordenado automáticamente A–Z';
+  document.getElementById('saveLink').textContent = 'Guardar favorito';
   document.getElementById('inp-name').value = '';
   document.getElementById('inp-url').value = '';
   modal.showModal();
   setTimeout(() => document.getElementById('inp-name').focus(), 50);
-});
+}
+
+function openEditModal(id) {
+  const link = links.find(l => l.id === id);
+  if (!link) return;
+  editingId = id;
+  document.getElementById('modalTitle').textContent = 'Editar favorito';
+  document.getElementById('modalSubtitle').textContent = 'Modifica el nombre y/o el enlace del sitio';
+  document.getElementById('saveLink').textContent = 'Guardar cambios';
+  document.getElementById('inp-name').value = link.name;
+  document.getElementById('inp-url').value = link.url;
+  modal.showModal();
+  setTimeout(() => document.getElementById('inp-name').focus(), 50);
+}
+
+document.getElementById('openAdd').addEventListener('click', openAddModal);
 document.getElementById('closeModal').addEventListener('click', () => modal.close());
 document.getElementById('cancelModal').addEventListener('click', () => modal.close());
 
@@ -680,11 +659,20 @@ document.getElementById('saveLink').addEventListener('click', () => {
     document.getElementById('inp-url').focus();
     return;
   }
-  links.push({ id: uid(), name, url });
+  if (editingId) {
+    const link = links.find(l => l.id === editingId);
+    if (!link) return;
+    link.name = name;
+    link.url = url;
+    showToast(`"${name}" actualizado`);
+  } else {
+    links.push({ id: uid(), name, url });
+    showToast(`"${name}" agregado`);
+  }
   save(links);
   modal.close();
+  editingId = null;
   render();
-  showToast(`"${name}" agregado`);
 });
 
 // Enter en modal
