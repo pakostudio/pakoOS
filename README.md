@@ -1,65 +1,61 @@
-# PAKO OS v2 — Admin Ready
+# PAKO OS — Command Center & Favoritos
 
-Sistema personal de favoritos y Command Center listo para GitHub Pages.
+Sistema personal de favoritos y centro de comando productivo de alto rendimiento, optimizado para alojarse directamente en **GitHub Pages** con persistencia local en tu navegador.
 
-## Qué incluye
+---
 
-- Fondo claro estilo Apple / Linear.
-- Buscador global.
-- Panel Admin.
-- Agregar favoritos.
-- Editar favoritos.
-- Eliminar favoritos.
-- Exportar respaldo JSON.
-- Importar favoritos de Chrome.
-- Datos base en `links.json`.
+## ✨ Características
 
-## Archivos
+- **Diseño limpio y moderno**: Estilo Apple / Linear con paleta en azul profundo, acentos dorados y fondo suave.
+- **Favicons automáticos**: Integración con el servicio oficial de Google Favicons para mostrar el icono real y nítido de cada sitio web.
+- **Organización por categorías**: Agrupación inteligente en *Operación diaria*, *Clientes & proyectos*, *IA & productividad*, *Marketing & contenido*, *Webs & tecnología*, *Administración* y *Archivo inteligente*.
+- **Acciones rápidas superiores**: Acceso instantáneo con un clic a herramientas frecuentes (ChatGPT, Gmail, Calendar, Drive).
+- **Reloj en vivo**: Fecha y hora local actualizadas en tiempo real en formato en español.
+- **Búsqueda global instantánea**: Filtra por nombre, URL, categoría o tag en tiempo real, con atajo de teclado rápido `⌘K` o `Ctrl+K`.
+- **Edición y borrado directo**: Botones de acción en cada tarjeta para abrir (`↗`), editar (`✏️`) o eliminar (`✕`).
+- **Panel de Control (Admin)**:
+  - Formulario intuitivo para agregar y editar favoritos con asignación de categoría y tag.
+  - Buscador y listado completo de favoritos para gestión ágil.
+  - **Exportar respaldo JSON**: Descarga un archivo listo para reemplazar `links.json` y actualizar permanentemente tu GitHub Pages.
+  - **Importar favoritos de Chrome**: Sube tu archivo `.html` exportado de Chrome/Edge/Brave; el sistema categoriza automáticamente y omite duplicados.
+  - **Restaurar valores originales**: Borra los datos locales y restablece el estado inicial desde `links.json`.
 
-- `index.html`
-- `style.css`
-- `app.js`
-- `links.json`
-- `README.md`
+---
 
-## Subir a GitHub Pages
+## 📁 Estructura del proyecto
 
-1. Crea un repositorio llamado `pako-os`.
-2. Sube todos los archivos a la raíz del repositorio.
-3. En GitHub entra a `Settings`.
-4. Entra a `Pages`.
-5. En `Build and deployment`, selecciona:
-   - Source: `Deploy from a branch`
-   - Branch: `main`
-   - Folder: `/root`
-6. Guarda.
+```text
+pakoOS/
+├── index.html     # Estructura semántica del Command Center y modal de administración
+├── style.css      # Hoja de estilos responsiva (Desktop, Tablet, Mobile)
+├── app.js         # Lógica, render reactivo, favicons, reloj, persistencia y respaldos
+├── links.json     # Base de datos inicial con metadata y lista de favoritos
+└── README.md      # Documentación y guía de despliegue
+```
 
-Tu sitio quedará en:
+---
 
-`https://TU-USUARIO.github.io/pako-os/`
+## 🚀 Publicar en GitHub Pages
 
-## Cómo agregar, editar o eliminar links
+1. Sube los archivos a la raíz de tu repositorio en GitHub (ej. `pako-os`).
+2. En GitHub, entra a **Settings** > **Pages**.
+3. En la sección **Build and deployment**, selecciona:
+   - **Source**: `Deploy from a branch`
+   - **Branch**: `main`
+   - **Folder**: `/(root)`
+4. Haz clic en **Save**. En un par de minutos tu sitio estará en vivo en:
+   `https://TU-USUARIO.github.io/pako-os/`
 
-Dentro de PAKO OS:
+---
 
-1. Clic en `Panel Admin`.
-2. Agrega, edita o elimina favoritos.
-3. Los cambios se guardan en tu navegador con `localStorage`.
+## 💾 Cómo sincronizar cambios locales con GitHub
 
-## Importante sobre GitHub Pages
+Los cambios que realizas en el sitio web (agregar, editar o eliminar favoritos) se guardan al instante en tu navegador mediante `localStorage`.
 
-Los cambios hechos desde el Panel Admin se guardan localmente en tu navegador.
+Para hacer que esos cambios sean permanentes para cualquier dispositivo o navegador en tu GitHub Pages:
 
-Para hacerlos permanentes en GitHub:
-
-1. En Panel Admin, clic en `Exportar respaldo JSON`.
-2. Descarga el archivo.
-3. Renómbralo como `links.json`.
-4. Súbelo a GitHub reemplazando el archivo anterior.
-
-## Importar favoritos de Chrome
-
-1. Exporta tus favoritos desde Chrome como `.html`.
-2. En PAKO OS, entra a `Panel Admin`.
-3. Usa `Importar favoritos de Chrome`.
-4. PAKO OS detecta duplicados y agrega solo nuevos enlaces.
+1. Abre el **Panel Admin** (⚙️).
+2. En la sección *Respaldos & Sincronización*, haz clic en **Descargar links.json**.
+3. Renombra el archivo descargado como `links.json` (si tu navegador le agregó un sufijo).
+4. Sube este nuevo `links.json` a tu repositorio en GitHub reemplazando el anterior.
+5. ¡Listo! Tu sitio en GitHub Pages se actualizará automáticamente con tu nueva lista.

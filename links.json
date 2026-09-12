@@ -29,7 +29,7 @@
   "links": [
     {
       "id": "google-calendar-calendar-google-com",
-      "name": "Google Calendar -",
+      "name": "Google Calendar",
       "url": "https://calendar.google.com/calendar/u/0/r",
       "category": "Operación diaria",
       "tag": "calendar.google.com",
@@ -85,7 +85,7 @@
     },
     {
       "id": "meetgeek-app2-meetgeek-ai",
-      "name": "MeetGeek |",
+      "name": "MeetGeek",
       "url": "https://app2.meetgeek.ai/past-meetings",
       "category": "Operación diaria",
       "tag": "app2.meetgeek.ai",
@@ -140,7 +140,7 @@
       "favorite": false
     },
     {
-      "id": "sistema-para-la-generaci-n-y-env-o-de-comprobantes-fiscales-",
+      "id": "sistema-para-la-generacion",
       "name": "Sistema para la generación y envío de Comprobantes Fiscales Digitales",
       "url": "https://cfd.sicofi.com.mx/Sicofi/Main",
       "category": "Administración",
@@ -149,7 +149,7 @@
     },
     {
       "id": "freepik-freepik-es",
-      "name": "Freepik:",
+      "name": "Freepik",
       "url": "https://www.freepik.es/",
       "category": "Marketing & contenido",
       "tag": "freepik.es",
@@ -166,7 +166,7 @@
     {
       "id": "meta-business-suite-business-facebook-com",
       "name": "Meta Business Suite",
-      "url": "https://business.facebook.com/latest/home?nav_ref=bizweb_alert_card&should_open_edit_fb_profile=false&mio=false&launch_notifications=false",
+      "url": "https://business.facebook.com/latest/home",
       "category": "Marketing & contenido",
       "tag": "business.facebook.com",
       "favorite": false
@@ -189,14 +189,14 @@
     },
     {
       "id": "linkedinjuan-linkedin-com",
-      "name": "LinkedinJuan",
+      "name": "LinkedIn Juan",
       "url": "https://www.linkedin.com/feed/",
       "category": "Marketing & contenido",
       "tag": "linkedin.com",
       "favorite": false
     },
     {
-      "id": "istockphoto-photo-downloader-downloader-la-downloader-la",
+      "id": "istockphoto-downloader-la",
       "name": "iStockphoto Photo Downloader - Downloader.la",
       "url": "https://downloader.la/istockphoto-downloader.html",
       "category": "Marketing & contenido",
@@ -204,7 +204,7 @@
       "favorite": false
     },
     {
-      "id": "administrar-tu-cuenta-de-apple-account-apple-com",
+      "id": "administrar-tu-cuenta-de-apple",
       "name": "Administrar tu cuenta de Apple",
       "url": "https://account.apple.com/sign-in",
       "category": "Administración",
@@ -212,7 +212,7 @@
       "favorite": false
     },
     {
-      "id": "fundacion-edmundo-rojas-soriano-fundacionedmundorojassoriano",
+      "id": "fundacion-edmundo-rojas",
       "name": "Fundacion Edmundo Rojas Soriano",
       "url": "https://fundacionedmundorojassoriano.com/",
       "category": "Archivo inteligente",
@@ -220,15 +220,15 @@
       "favorite": false
     },
     {
-      "id": "spotify-for-creators-la-forma-m-s-f-cil-de-crear-un-podcast-",
-      "name": "Spotify for Creators: la forma más fácil de crear un podcast",
+      "id": "spotify-for-creators",
+      "name": "Spotify for Creators",
       "url": "https://creators.spotify.com/pod/dashboard/home",
       "category": "Marketing & contenido",
       "tag": "creators.spotify.com",
       "favorite": false
     },
     {
-      "id": "home-elevenlabs-elevenlabs-io",
+      "id": "home-elevenlabs",
       "name": "Home | ElevenLabs",
       "url": "https://elevenlabs.io/app/home",
       "category": "IA & productividad",
@@ -236,15 +236,15 @@
       "favorite": false
     },
     {
-      "id": "wordpress-profesionalesencontabilidad-com",
+      "id": "wordpress-gpc",
       "name": "WordPress",
-      "url": "https://profesionalesencontabilidad.com/wp-admin/admin.php?page=envato-elements#/template-kits/installed-kits/kit/17",
-      "category": "Marketing & contenido",
+      "url": "https://profesionalesencontabilidad.com/wp-admin/",
+      "category": "Webs & tecnología",
       "tag": "profesionalesencontabilidad.com",
       "favorite": false
     },
     {
-      "id": "gpc-grupo-de-profesionales-en-contabilidad-grupoprofesionale",
+      "id": "gpc-grupoprofesionales",
       "name": "GPC | Grupo de Profesionales en Contabilidad",
       "url": "http://grupoprofesionales.com/servicios_profesionales.html",
       "category": "Clientes & proyectos",
@@ -252,15 +252,15 @@
       "favorite": false
     },
     {
-      "id": "linktree-admin-linktr-ee",
+      "id": "linktree-admin",
       "name": "Linktree Admin",
-      "url": "https://linktr.ee/admin?integrationLinkId=496936762&feature=instagram_linkapp",
+      "url": "https://linktr.ee/admin",
       "category": "Marketing & contenido",
       "tag": "linktr.ee",
       "favorite": false
     },
     {
-      "id": "spotify-eduardo-lozowsky-open-spotify-com",
+      "id": "spotify-eduardo-lozowsky",
       "name": "Spotify – Eduardo Lozowsky",
       "url": "https://open.spotify.com/user/31hnxngm5eonl5dvedugvmzfp45q",
       "category": "Marketing & contenido",
@@ -268,15 +268,15 @@
       "favorite": false
     },
     {
-      "id": "versicherung-docs-google-com",
+      "id": "versicherung",
       "name": "Versicherung",
-      "url": "https://docs.google.com/document/d/16uTio7fY3ADQUHrbo0K54mfvWDn-sYqmZcNnlJVSV0I/edit?tab=t.0",
+      "url": "https://docs.google.com/document/d/16uTio7fY3ADQUHrbo0K54mfvWDn-sYqmZcNnlJVSV0I/edit",
       "category": "Archivo inteligente",
       "tag": "docs.google.com",
       "favorite": false
     },
     {
-      "id": "youtube-to-mp3-converter-ad-free-cnvmp3-com",
+      "id": "youtube-mp3",
       "name": "Youtube to MP3 Converter (Ad-free)",
       "url": "https://cnvmp3.com/v33",
       "category": "Marketing & contenido",
@@ -284,15 +284,15 @@
       "favorite": false
     },
     {
-      "id": "inventario-prokicks-hojas-de-c-lculo-de-google-docs-google-c",
-      "name": "INVENTARIO PROKICKS - Hojas de cálculo de Google",
-      "url": "https://docs.google.com/spreadsheets/d/1A2oX7cZgytAd5DSH27Tx5S1JNaAdjhAOnxHP6OcShWc/edit?gid=891834841#gid=891834841",
+      "id": "inventario-prokicks",
+      "name": "INVENTARIO PROKICKS - Google Sheets",
+      "url": "https://docs.google.com/spreadsheets/d/1A2oX7cZgytAd5DSH27Tx5S1JNaAdjhAOnxHP6OcShWc/edit",
       "category": "Clientes & proyectos",
       "tag": "docs.google.com",
       "favorite": false
     },
     {
-      "id": "prokicks-inicio-shopify-admin-shopify-com",
+      "id": "prokicks-shopify",
       "name": "ProKicks · Inicio · Shopify",
       "url": "https://admin.shopify.com/store/0qn3c0-hd/",
       "category": "Webs & tecnología",
@@ -300,7 +300,7 @@
       "favorite": false
     },
     {
-      "id": "tiktok-studio-tiktok-com",
+      "id": "tiktok-studio",
       "name": "TikTok Studio",
       "url": "https://www.tiktok.com/tiktokstudio/content",
       "category": "Marketing & contenido",
@@ -308,7 +308,7 @@
       "favorite": false
     },
     {
-      "id": "mavas-edit-elementor-nuevo-mavas-com-mx",
+      "id": "mavas-edit-elementor",
       "name": "Mavas edit elementor",
       "url": "https://nuevo.mavas.com.mx/wp-admin/post.php?post=4768&action=elementor",
       "category": "Webs & tecnología",
@@ -316,7 +316,7 @@
       "favorite": false
     },
     {
-      "id": "github-github-com",
+      "id": "github-pakostudio",
       "name": "GITHUB",
       "url": "https://github.com/pakostudio",
       "category": "Webs & tecnología",
@@ -324,7 +324,7 @@
       "favorite": false
     },
     {
-      "id": "sm-soluciones-credenciales-pakostudio-github-io",
+      "id": "sm-soluciones",
       "name": "SM Soluciones — Credenciales",
       "url": "https://pakostudio.github.io/SM-Soluciones/#contacto",
       "category": "Webs & tecnología",
@@ -332,7 +332,7 @@
       "favorite": false
     },
     {
-      "id": "smsoluciones-elementor-smsoluciones-group-com-mx",
+      "id": "smsoluciones-elementor",
       "name": "SMSoluciones Elementor",
       "url": "https://smsoluciones-group.com.mx/wp-admin/post.php?post=138&action=elementor",
       "category": "Webs & tecnología",
@@ -340,15 +340,15 @@
       "favorite": false
     },
     {
-      "id": "cpanel-monitorizar-el-env-o-mavas-com-mx-2083",
+      "id": "cpanel-mavas",
       "name": "cPanel - Monitorizar el envío",
-      "url": "https://mavas.com.mx:2083/cpsess2245282101/frontend/jupiter/mail/route.html?=undefined&login=1&post_login=56955639765972",
+      "url": "https://mavas.com.mx:2083/cpsess2245282101/frontend/jupiter/mail/route.html",
       "category": "Operación diaria",
-      "tag": "mavas.com.mx:2083",
+      "tag": "mavas.com.mx",
       "favorite": false
     },
     {
-      "id": "tdi-control-facturaci-n-pakostudio-github-io",
+      "id": "tdi-facturacion",
       "name": "TDI Control · Facturación",
       "url": "https://pakostudio.github.io/facturacion/",
       "category": "Webs & tecnología",
@@ -356,7 +356,7 @@
       "favorite": false
     },
     {
-      "id": "menlun-crm-pakostudio-github-io",
+      "id": "menlun-crm",
       "name": "Menlun CRM",
       "url": "https://pakostudio.github.io/Menlun/",
       "category": "Webs & tecnología",
@@ -364,7 +364,7 @@
       "favorite": false
     },
     {
-      "id": "catalogo-pmps-pakostudio-github-io",
+      "id": "catalogo-pmps",
       "name": "Catalogo PMPS",
       "url": "https://pakostudio.github.io/pmps-menlun/",
       "category": "Webs & tecnología",
@@ -372,15 +372,15 @@
       "favorite": false
     },
     {
-      "id": "correo-juan-bosco-outlook-outlook-cloud-microsoft",
+      "id": "correo-juan-bosco",
       "name": "Correo: Juan Bosco - Outlook",
-      "url": "https://outlook.cloud.microsoft/mail/inbox/id/AAQkADI5OGVjZGMxLWM3MTgtNGI2ZC1iNGUwLTQzODlmNmIzNDRiMQAQAJ7MrGLQYX9MsyVsfPfAYHs%3D",
+      "url": "https://outlook.cloud.microsoft/mail/inbox/",
       "category": "Operación diaria",
       "tag": "outlook.cloud.microsoft",
       "favorite": false
     },
     {
-      "id": "impi-instituto-mexicano-de-la-propiedad-industrial-marcaenli",
+      "id": "impi",
       "name": "IMPI – Instituto Mexicano de la Propiedad Industrial",
       "url": "https://marcaenlinea.impi.gob.mx/MarcaEnLinea/vistas/solicitud/tableros/SolicitudesEnPreparacion.jsf",
       "category": "Administración",
@@ -388,7 +388,7 @@
       "favorite": false
     },
     {
-      "id": "ofunam-crm-patrocinadores-pakostudio-github-io",
+      "id": "ofunam-crm",
       "name": "OFUNAM · CRM Patrocinadores",
       "url": "https://pakostudio.github.io/ofunam-leads/",
       "category": "Webs & tecnología",
@@ -396,7 +396,7 @@
       "favorite": false
     },
     {
-      "id": "menlun-sistema-de-leads-pakostudio-github-io",
+      "id": "menlun-leads",
       "name": "MENLUN — Sistema de Leads",
       "url": "https://pakostudio.github.io/menlun-prospectos/",
       "category": "Webs & tecnología",
@@ -404,23 +404,15 @@
       "favorite": false
     },
     {
-      "id": "generador-de-tarjetas-digitales",
-      "name": "Generador de Tarjetas Digitales",
-      "url": "file:///Users/pakostudio/Downloads/generador-tarjetas.html",
-      "category": "Archivo inteligente",
-      "tag": "",
-      "favorite": false
-    },
-    {
-      "id": "create-courses-with-ai-powered-authoring-tool-learningstudio",
-      "name": "Create courses with AI-powered authoring tool | LearningStudioAI",
+      "id": "learningstudioai",
+      "name": "Create courses with AI - LearningStudioAI",
       "url": "https://learningstudioai.com/courses",
-      "category": "Archivo inteligente",
+      "category": "IA & productividad",
       "tag": "learningstudioai.com",
       "favorite": false
     },
     {
-      "id": "main-panamsportschannel-org",
+      "id": "main-panamsports",
       "name": "Main",
       "url": "https://www.panamsportschannel.org/main",
       "category": "Archivo inteligente",
@@ -428,7 +420,7 @@
       "favorite": false
     },
     {
-      "id": "vizard-vizard-ai",
+      "id": "vizard",
       "name": "Vizard",
       "url": "https://vizard.ai/",
       "category": "IA & productividad",
@@ -436,15 +428,15 @@
       "favorite": false
     },
     {
-      "id": "webpako-pakoayala-com",
+      "id": "webpako",
       "name": "webpako",
       "url": "https://pakoayala.com/wp-admin/",
-      "category": "Archivo inteligente",
+      "category": "Webs & tecnología",
       "tag": "pakoayala.com",
       "favorite": false
     },
     {
-      "id": "drive-bobby-drive-google-com",
+      "id": "drive-bobby",
       "name": "Drive Bobby",
       "url": "https://drive.google.com/drive/folders/1-3lsmcF_LJ8EjrTRmhYik-xQUJi6QniM",
       "category": "Operación diaria",
@@ -452,7 +444,7 @@
       "favorite": false
     },
     {
-      "id": "ngeles-cd-mexico-google-drive-drive-google-com",
+      "id": "angeles-cd-mexico",
       "name": "Ángeles CD Mexico - Google Drive",
       "url": "https://drive.google.com/drive/folders/1_kUOMSGd0UwDBtbNG9De53omI8VlwqBM",
       "category": "Operación diaria",
@@ -460,7 +452,7 @@
       "favorite": false
     },
     {
-      "id": "inbox-timehero-app-timehero-com",
+      "id": "inbox-timehero",
       "name": "Inbox – TimeHero",
       "url": "https://app.timehero.com/#!/app/work/inbox",
       "category": "Archivo inteligente",
@@ -468,18 +460,18 @@
       "favorite": false
     },
     {
-      "id": "kindle-direct-publishing-de-amazon-autopublique-su-libro-en-",
-      "name": "Kindle Direct Publishing de Amazon: autopublique su libro en la Tienda Kindle de Amazon",
-      "url": "https://kdp.amazon.com/es_ES/bookshelf?ref_=kdp_kdp_TAC_TN_bs&token=eyJyZXF1ZXN0Ijp7InJlcXVlc3RUeXBlIjoiY29tLmFtYXpvbi5vYXcuc2VydmljZS5PQVdBY2NlcHRSZXF1ZXN0IiwiY2xpZW50SWQiOiJraW5kbGVfZGlyZWN0X3B1Ymxpc2hpbmciLCJkb2N1bWVudElkIjoia2RwIiwiY2FuY2VsVXJsIjoiaHR0cHM6Ly9rZHAuYW1hem9uLmNvbS8iLCJjbGllbnRMb2NhbGUiOiJOQSIsImRpc3BsYXlQYXJhbXMiOm51bGwsInJhd1BhcmFtcyI6bnVsbCwibWFya2V0cGxhY2VJZCI6bnVsbCwiY3VzdG9tZXJJZCI6IkFLREUxUkRNSU1BUVQiLCJyZXF1ZXN0RGF0ZSI6MTcwMDQxODczNjgxNywic2Vzc2lvbkV4cGlyZURhdGUiOm51bGwsImFjY2VwdGFuY2VVcmwiOiJodHRwczovL2tkcC5hbWF6b24uY29tL2Jvb2tzaGVsZj9yZWZfPWtkcF9rZHBfVEFDX1ROX2JzIn0sImFjY2VwdGFuY2VEYXRlIjoxNzAwNDE4NzQ4NTAyfQ%7CeyJtYXRlcmlhbFNlcmlhbCI6MSwiaG1hYyI6ImVTV2phMVErMGdXb09BZkhCT3R6T0FOR3JsOERPRk0yNWZzODVXNG4rdk09IiwianNvbkhtYWMiOnRydWUsInR5cGUiOm51bGwsImFjY2VwdCI6ZmFsc2V9",
+      "id": "kindle-direct",
+      "name": "Kindle Direct Publishing de Amazon",
+      "url": "https://kdp.amazon.com/es_ES/bookshelf",
       "category": "Archivo inteligente",
       "tag": "kdp.amazon.com",
       "favorite": false
     },
     {
-      "id": "learn-anything-tutorai-me",
+      "id": "learn-anything",
       "name": "Learn anything",
       "url": "https://www.tutorai.me/",
-      "category": "Archivo inteligente",
+      "category": "IA & productividad",
       "tag": "tutorai.me",
       "favorite": false
     }

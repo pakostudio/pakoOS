@@ -3,706 +3,182 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PAKO OS · Favoritos</title>
-  <style>
-    :root {
-      --bg: #eef6fb;
-      --panel: #ffffff;
-      --text: #171717;
-      --muted: #607282;
-      --line: #d8e7f1;
-      --gold: #9a7a2f;
-      --blue: #183b56;
-      --danger: #b42318;
-      --danger-soft: #fdf0ef;
-      --radius: 20px;
-      --shadow: 0 8px 40px rgba(24,59,86,.08);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background:
-        radial-gradient(circle at 12% 0%, rgba(255,255,255,.85), transparent 32%),
-        linear-gradient(135deg, #eef6fb 0%, #e7f2f8 48%, #f6fbff 100%);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-    }
-
-    .shell {
-      width: min(1180px, calc(100% - 28px));
-      margin: auto;
-      padding: 24px 0 34px;
-    }
-
-    /* ── HEADER ── */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .mark {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      background: var(--blue);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 22px;
-      box-shadow: 0 4px 18px rgba(24,38,66,.2);
-      flex-shrink: 0;
-    }
-    .brand-text .eyebrow {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .18em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-    .brand-text h1 {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 26px;
-      letter-spacing: -.02em;
-      line-height: 1;
-      color: var(--blue);
-    }
-    .count-badge {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 12px;
-      background: rgba(24,38,66,.07);
-      border-radius: 999px;
-      padding: 6px 14px;
-      color: var(--muted);
-    }
-    .count-badge strong {
-      color: var(--blue);
-      font-weight: 700;
-    }
-
-    /* ── BARRA SUPERIOR ── */
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .search-box {
-      flex: 1;
-      position: relative;
-    }
-    .search-box input {
-      width: 100%;
-      border: 1.5px solid var(--line);
-      background: var(--panel);
-      border-radius: 14px;
-      padding: 13px 16px 13px 42px;
-      font-size: 14px;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      outline: none;
-      transition: border-color .2s;
-    }
-    .search-box input:focus { border-color: rgba(24,91,130,.35); }
-    .search-box .ico {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-      font-size: 15px;
-    }
-    .btn-add {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 0 20px;
-      background: var(--blue);
-      color: #fff;
-      border: none;
-      border-radius: 14px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: opacity .18s, transform .18s;
-      white-space: nowrap;
-    }
-    .btn-add:hover { opacity: .88; transform: translateY(-1px); }
-
-    /* ── TABLERO COMPACTO ── */
-    #list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-      gap: 10px;
-      align-items: stretch;
-    }
-
-    /* ── TARJETA ── */
-    .fav-item {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr auto;
-      align-items: stretch;
-      gap: 10px;
-      min-height: 118px;
-      background: var(--panel);
-      border: 1.5px solid var(--line);
-      border-radius: 16px;
-      padding: 12px;
-      transition: border-color .18s, box-shadow .18s, transform .18s;
-      min-width: 0;
-    }
-    .fav-item:hover {
-      border-color: rgba(24,91,130,.28);
-      box-shadow: var(--shadow);
-      transform: translateY(-1px);
-    }
-    .fav-link {
-      text-decoration: none;
-      color: var(--text);
-      display: grid;
-      grid-template-columns: 30px 1fr;
-      align-items: start;
-      gap: 10px;
-      min-width: 0;
-    }
-    .fav-favicon {
-      width: 30px;
-      height: 30px;
-      border-radius: 9px;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .fav-favicon img {
-      width: 18px;
-      height: 18px;
-      object-fit: contain;
-    }
-    .fav-name {
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.2;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .fav-domain {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 10px;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-top: 4px;
-    }
-    .fav-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .btn-open {
-      background: rgba(24,38,66,.06);
-      border: none;
-      border-radius: 9px;
-      padding: 7px 9px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--blue);
-      cursor: pointer;
-      transition: background .16s;
-      text-decoration: none;
-    }
-    .btn-open:hover { background: rgba(24,38,66,.12); }
-    .btn-del {
-      background: none;
-      border: 1.5px solid transparent;
-      border-radius: 9px;
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 14px;
-      transition: all .16s;
-    }
-    .btn-del:hover {
-      color: var(--danger);
-      background: var(--danger-soft);
-      border-color: rgba(180,35,24,.15);
-    }
-    .btn-rename {
-      background: none;
-      border: 1.5px solid transparent;
-      border-radius: 9px;
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 14px;
-      transition: all .16s;
-      opacity: 0;
-    }
-    .fav-item:hover .btn-rename { opacity: 1; }
-    .btn-rename:hover {
-      background: #e5f1f8;
-      border-color: rgba(24,91,130,.22);
-      color: var(--gold);
-    }
-    .fav-name-input {
-      border: 1.5px solid rgba(24,91,130,.35);
-      background: #f7fbfe;
-      border-radius: 8px;
-      padding: 3px 8px;
-      font-size: 14px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 700;
-      color: var(--text);
-      outline: none;
-      width: 100%;
-      min-width: 120px;
-    }
-
-    /* ── EMPTY ── */
-    .empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .empty span { font-size: 32px; display: block; margin-bottom: 10px; }
-
-    /* ── MODAL AGREGAR ── */
-    dialog {
-      border: none;
-      border-radius: 24px;
-      padding: 28px;
-      width: min(480px, calc(100% - 28px));
-      background: var(--panel);
-      box-shadow: 0 30px 100px rgba(0,0,0,.2);
-    }
-    dialog::backdrop {
-      background: rgba(24,38,66,.4);
-      backdrop-filter: blur(6px);
-    }
-    .modal-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 22px;
-    }
-    .modal-head h2 {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 22px;
-      color: var(--blue);
-    }
-    .modal-head p {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-    .btn-close {
-      background: rgba(0,0,0,.06);
-      border: none;
-      border-radius: 10px;
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background .16s;
-    }
-    .btn-close:hover { background: rgba(0,0,0,.1); }
-    .form-field {
-      display: grid;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-    .form-field label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
-    .form-field input {
-      border: 1.5px solid var(--line);
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 14px;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      outline: none;
-      transition: border-color .2s;
-    }
-    .form-field input:focus { border-color: rgba(24,91,130,.35); background: #fff; }
-    .form-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .btn-save {
-      flex: 1;
-      padding: 14px;
-      background: var(--blue);
-      color: #fff;
-      border: none;
-      border-radius: 13px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: opacity .16s;
-    }
-    .btn-save:hover { opacity: .88; }
-    .btn-cancel {
-      padding: 14px 20px;
-      background: rgba(0,0,0,.05);
-      border: none;
-      border-radius: 13px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      color: var(--muted);
-      transition: background .16s;
-    }
-    .btn-cancel:hover { background: rgba(0,0,0,.09); }
-
-    /* ── TOAST ── */
-    .toast {
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--blue);
-      color: #fff;
-      padding: 12px 22px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      pointer-events: none;
-      transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
-      opacity: 0;
-      z-index: 999;
-      white-space: nowrap;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-    .toast.danger { background: var(--danger); }
-
-    /* ── SCROLL LETTERS SIDEBAR (decorativo) ── */
-    footer {
-      margin-top: 40px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      color: var(--muted);
-      font-size: 12px;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    @media (max-width: 900px) {
-      #list { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
-    }
-    @media (max-width: 600px) {
-      .shell { width: min(100% - 18px, 1180px); padding: 18px 0 32px; }
-      .header { flex-wrap: wrap; gap: 10px; }
-      .toolbar { flex-direction: column; }
-      .btn-add { justify-content: center; min-height: 44px; }
-      #list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-      .fav-item { min-height: 112px; padding: 10px; }
-      .btn-rename { opacity: 1; }
-    }
-  </style>
+  <title>PAKO OS · Command Center</title>
+  <meta name="description" content="Sistema personal de favoritos y Command Center listo para GitHub Pages.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2228%22 fill=%22%23183b56%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-size=%2255%22 font-weight=%22bold%22>P</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
 </head>
 <body>
 
-<div class="shell">
+  <div class="shell">
 
-  <header class="header">
-    <div class="brand">
-      <div class="mark">P</div>
-      <div class="brand-text">
-        <p class="eyebrow">Pako Studio System</p>
-        <h1>Favoritos</h1>
-      </div>
-    </div>
-    <div class="count-badge">
-      <strong id="countNum">0</strong> links · A–Z
-    </div>
-  </header>
-
-  <div class="toolbar">
-    <div class="search-box">
-      <span class="ico">⌘</span>
-      <input id="search" placeholder="Buscar favorito…" autocomplete="off">
-    </div>
-    <button class="btn-add" id="openAdd">
-      <span>＋</span> Agregar
-    </button>
-  </div>
-
-  <div id="list"></div>
-
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- MODAL AGREGAR -->
-<dialog id="addModal">
-  <div class="modal-head">
-    <div>
-      <h2 id="modalTitle">Nuevo favorito</h2>
-      <p id="modalSubtitle">Se agrega ordenado automáticamente A–Z</p>
-    </div>
-    <button class="btn-close" id="closeModal">✕</button>
-  </div>
-  <div class="form-field">
-    <label>Nombre</label>
-    <input id="inp-name" placeholder="Ej. Shopify PRO KICKS" autocomplete="off">
-  </div>
-  <div class="form-field">
-    <label>URL</label>
-    <input id="inp-url" placeholder="https://…" autocomplete="off" type="url">
-  </div>
-  <div class="form-actions">
-    <button class="btn-cancel" id="cancelModal">Cancelar</button>
-    <button class="btn-save" id="saveLink">Guardar favorito</button>
-  </div>
-</dialog>
-
-<script>
-const STORAGE_KEY = 'pako_favs_v3';
-
-const BASE_LINKS = [{"id":"google-calendar-calendar-google-com","name":"Google Calendar -","url":"https://calendar.google.com/calendar/u/0/r"},{"id":"google-meet-meet-google-com","name":"Google Meet","url":"https://meet.google.com/?hs=197&authuser=0"},{"id":"google-drive-drive-google-com","name":"Google Drive","url":"https://drive.google.com/drive/u/0/my-drive"},{"id":"notebooklm-notebooklm-google-com","name":"NotebookLM","url":"https://notebooklm.google.com/"},{"id":"claude-design-claude-ai","name":"Claude Design","url":"https://claude.ai/design"},{"id":"perplexity-perplexity-ai","name":"Perplexity","url":"https://www.perplexity.ai/?utm_source=chatgpt.com"},{"id":"inicio-canva-canva-com","name":"Inicio - Canva","url":"https://www.canva.com/?continue_in_browser=true"},{"id":"meetgeek-app2-meetgeek-ai","name":"MeetGeek","url":"https://app2.meetgeek.ai/past-meetings"},{"id":"titan-app-titan-email","name":"Titan","url":"https://app.titan.email/mail/"},{"id":"mail-en-icloud-icloud-com","name":"Mail en iCloud","url":"https://www.icloud.com/mail/"},{"id":"envato-elements-envato-com","name":"Envato","url":"https://elements.envato.com/es/"},{"id":"instagram-instagram-com","name":"Instagram","url":"https://www.instagram.com/"},{"id":"youtube-youtube-com","name":"YouTube","url":"https://www.youtube.com/?hl=es"},{"id":"bepensa-cxp-bepensa-com","name":"Bepensa","url":"https://cxp.bepensa.com/edocrecibo.fv2lite.web/Login.aspx"},{"id":"sistema-para-la-generacion","name":"Sistema para la generación y envío de Comprobantes Fiscales Digitales","url":"https://cfd.sicofi.com.mx/Sicofi/Main"},{"id":"freepik-freepik-es","name":"Freepik","url":"https://www.freepik.es/"},{"id":"icloud-icloud-com","name":"iCloud","url":"https://www.icloud.com/"},{"id":"meta-business-suite-business-facebook-com","name":"Meta Business Suite","url":"https://business.facebook.com/latest/home"},{"id":"spotify-open-spotify-com","name":"Spotify","url":"https://open.spotify.com/intl-es/#_=_"},{"id":"hostgator-cliente-hostgator-mx","name":"Hostgator","url":"https://cliente.hostgator.mx/sitios-web"},{"id":"linkedinjuan-linkedin-com","name":"LinkedIn Juan","url":"https://www.linkedin.com/feed/"},{"id":"istockphoto-downloader-la","name":"iStockphoto Photo Downloader - Downloader.la","url":"https://downloader.la/istockphoto-downloader.html"},{"id":"administrar-tu-cuenta-de-apple","name":"Administrar tu cuenta de Apple","url":"https://account.apple.com/sign-in"},{"id":"fundacion-edmundo-rojas","name":"Fundacion Edmundo Rojas Soriano","url":"https://fundacionedmundorojassoriano.com/"},{"id":"spotify-for-creators","name":"Spotify for Creators","url":"https://creators.spotify.com/pod/dashboard/home"},{"id":"home-elevenlabs","name":"Home | ElevenLabs","url":"https://elevenlabs.io/app/home"},{"id":"wordpress-gpc","name":"WordPress","url":"https://profesionalesencontabilidad.com/wp-admin/"},{"id":"gpc-grupoprofesionales","name":"GPC | Grupo de Profesionales en Contabilidad","url":"http://grupoprofesionales.com/servicios_profesionales.html"},{"id":"linktree-admin","name":"Linktree Admin","url":"https://linktr.ee/admin"},{"id":"spotify-eduardo-lozowsky","name":"Spotify – Eduardo Lozowsky","url":"https://open.spotify.com/user/31hnxngm5eonl5dvedugvmzfp45q"},{"id":"versicherung","name":"Versicherung","url":"https://docs.google.com/document/d/16uTio7fY3ADQUHrbo0K54mfvWDn-sYqmZcNnlJVSV0I/edit"},{"id":"youtube-mp3","name":"Youtube to MP3 Converter (Ad-free)","url":"https://cnvmp3.com/v33"},{"id":"inventario-prokicks","name":"INVENTARIO PROKICKS - Google Sheets","url":"https://docs.google.com/spreadsheets/d/1A2oX7cZgytAd5DSH27Tx5S1JNaAdjhAOnxHP6OcShWc/edit"},{"id":"prokicks-shopify","name":"ProKicks · Inicio · Shopify","url":"https://admin.shopify.com/store/0qn3c0-hd/"},{"id":"tiktok-studio","name":"TikTok Studio","url":"https://www.tiktok.com/tiktokstudio/content"},{"id":"mavas-edit-elementor","name":"Mavas edit elementor","url":"https://nuevo.mavas.com.mx/wp-admin/post.php?post=4768&action=elementor"},{"id":"github-pakostudio","name":"GITHUB","url":"https://github.com/pakostudio"},{"id":"sm-soluciones","name":"SM Soluciones — Credenciales","url":"https://pakostudio.github.io/SM-Soluciones/#contacto"},{"id":"smsoluciones-elementor","name":"SMSoluciones Elementor","url":"https://smsoluciones-group.com.mx/wp-admin/post.php?post=138&action=elementor"},{"id":"cpanel-mavas","name":"cPanel - Monitorizar el envío","url":"https://mavas.com.mx:2083/cpsess2245282101/frontend/jupiter/mail/route.html"},{"id":"tdi-facturacion","name":"TDI Control · Facturación","url":"https://pakostudio.github.io/facturacion/"},{"id":"menlun-crm","name":"Menlun CRM","url":"https://pakostudio.github.io/Menlun/"},{"id":"catalogo-pmps","name":"Catalogo PMPS","url":"https://pakostudio.github.io/pmps-menlun/"},{"id":"correo-juan-bosco","name":"Correo: Juan Bosco - Outlook","url":"https://outlook.cloud.microsoft/mail/inbox/"},{"id":"impi","name":"IMPI – Instituto Mexicano de la Propiedad Industrial","url":"https://marcaenlinea.impi.gob.mx/MarcaEnLinea/vistas/solicitud/tableros/SolicitudesEnPreparacion.jsf"},{"id":"ofunam-crm","name":"OFUNAM · CRM Patrocinadores","url":"https://pakostudio.github.io/ofunam-leads/"},{"id":"menlun-leads","name":"MENLUN — Sistema de Leads","url":"https://pakostudio.github.io/menlun-prospectos/"},{"id":"learningstudioai","name":"Create courses with AI - LearningStudioAI","url":"https://learningstudioai.com/courses"},{"id":"main-panamsports","name":"Main","url":"https://www.panamsportschannel.org/main"},{"id":"vizard","name":"Vizard","url":"https://vizard.ai/"},{"id":"webpako","name":"webpako","url":"https://pakoayala.com/wp-admin/"},{"id":"drive-bobby","name":"Drive Bobby","url":"https://drive.google.com/drive/folders/1-3lsmcF_LJ8EjrTRmhYik-xQUJi6QniM"},{"id":"angeles-cd-mexico","name":"Ángeles CD Mexico - Google Drive","url":"https://drive.google.com/drive/folders/1_kUOMSGd0UwDBtbNG9De53omI8VlwqBM"},{"id":"inbox-timehero","name":"Inbox – TimeHero","url":"https://app.timehero.com/#!/app/work/inbox"},{"id":"kindle-direct","name":"Kindle Direct Publishing de Amazon","url":"https://kdp.amazon.com/es_ES/bookshelf"},{"id":"learn-anything","name":"Learn anything","url":"https://www.tutorai.me/"}];
-
-// ── STATE ──
-function load() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch {}
-  return BASE_LINKS.map(l => ({...l}));
-}
-function save(links) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
-}
-
-let links = load();
-let query = '';
-
-// ── UTILS ──
-function norm(str) {
-  return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-function uid() {
-  return 'fav-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,6);
-}
-function getDomain(url) {
-  try { return new URL(url).hostname.replace('www.', ''); } catch { return ''; }
-}
-function getFaviconUrl(url) {
-  try {
-    const hostname = new URL(url).hostname;
-    return `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
-  } catch { return ''; }
-}
-function esc(str) {
-  return (str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-}
-
-// ── RENDER ──
-function render() {
-  const el = document.getElementById('list');
-  let filtered = links;
-  if (query) {
-    const q = norm(query);
-    filtered = links.filter(l => norm(l.name + ' ' + l.url).includes(q));
-  }
-
-  const sorted = [...filtered].sort((a, b) =>
-    norm(a.name).localeCompare(norm(b.name))
-  );
-
-  document.getElementById('countNum').textContent = links.length;
-
-  if (!sorted.length) {
-    el.innerHTML = `<div class="empty"><span>🔍</span>${query ? 'Sin resultados para "' + esc(query) + '"' : 'Sin favoritos. ¡Agrega el primero!'}</div>`;
-    return;
-  }
-
-  el.innerHTML = sorted.map(l => `
-    <div class="fav-item" data-id="${esc(l.id)}">
-      <a class="fav-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">
-        <div class="fav-favicon">
-          <img src="${esc(getFaviconUrl(l.url))}" alt="" loading="lazy" onerror="this.style.display='none'">
+    <!-- HEADER SUPERIOR -->
+    <header class="header">
+      <div class="brand">
+        <div class="mark">P</div>
+        <div class="brand-text">
+          <p class="eyebrow">Pako Studio System</p>
+          <h1 id="brandTitle">PAKO OS</h1>
         </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="timebox">
+          <span id="dateText">cargando fecha...</span>
+          <strong id="timeText">00:00</strong>
+        </div>
+        <button class="btn" id="quickAddBtn">
+          <span>＋</span> Agregar
+        </button>
+        <button class="btn primary" id="adminBtn">
+          <span>⚙️</span> Panel Admin
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO & BUSCADOR -->
+    <section class="hero">
+      <div class="hero-main">
         <div>
-          <div class="fav-name">${esc(l.name)}</div>
-          <div class="fav-domain">${esc(getDomain(l.url))}</div>
+          <p class="tagline" id="tagline">Where strategy becomes perception</p>
+          <p class="subtitle" id="subtitle">Command Center para operar favoritos, clientes, IA, marketing, tecnología y administración.</p>
         </div>
-      </a>
-      <div class="fav-actions">
-        <button class="btn-rename" data-rename="${esc(l.id)}" title="Editar nombre y enlace">✏️</button>
-        <a class="btn-open" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">↗</a>
-        <button class="btn-del" data-del="${esc(l.id)}" title="Eliminar">✕</button>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input id="search" placeholder="Buscar por nombre, categoría, tag o URL…" autocomplete="off">
+          <span class="search-shortcut">⌘K</span>
+        </div>
       </div>
+
+      <div class="metrics">
+        <div class="metric-box">
+          <span>Total Favoritos</span>
+          <strong id="totalLinks">0</strong>
+        </div>
+        <div class="metric-box">
+          <span>Categorías Activas</span>
+          <strong id="totalCategories">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCIONES RÁPIDAS -->
+    <section class="quick-section">
+      <div class="section-label">
+        <h2>Accesos Rápidos</h2>
+      </div>
+      <div class="quick-grid" id="quickActions"></div>
+    </section>
+
+    <!-- TABLERO POR CATEGORÍAS -->
+    <main class="cards-container" id="cards"></main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>PAKO OS · Diseñado para alto rendimiento y operación diaria</div>
+      <div>Guardado en tu navegador · Exportable a GitHub Pages</div>
+    </footer>
+
+  </div>
+
+  <!-- TOAST DE NOTIFICACIONES -->
+  <div class="toast" id="toast"></div>
+
+  <!-- MODAL DE PANEL ADMIN -->
+  <dialog class="modal" id="adminModal">
+    <div class="modal-head">
+      <div>
+        <h2>Panel de Control</h2>
+        <p>Administra enlaces, realiza respaldos y sincroniza con GitHub Pages.</p>
+      </div>
+      <button class="btn-close" id="closeAdmin" title="Cerrar">✕</button>
     </div>
-  `).join('');
-}
 
-// ── EVENTS ──
-document.getElementById('search').addEventListener('input', e => {
-  query = e.target.value;
-  render();
-});
+    <div class="admin-grid">
 
-// Delete & Editar
-document.getElementById('list').addEventListener('click', e => {
-  const delId = e.target.dataset.del;
-  if (delId) {
-    const link = links.find(l => l.id === delId);
-    if (!link) return;
-    if (!confirm(`Eliminar "${link.name}" de favoritos?`)) return;
-    links = links.filter(l => l.id !== delId);
-    save(links);
-    render();
-    showToast(`"${link.name}" eliminado`, true);
-    return;
-  }
+      <!-- COLUMNA IZQUIERDA: FORMULARIO AGREGAR / EDITAR -->
+      <div class="admin-card">
+        <h3 id="formTitle">Agregar favorito</h3>
+        <form id="linkForm" class="form-stack">
+          <input type="hidden" id="linkId">
 
-  const editId = e.target.dataset.rename;
-  if (editId) {
-    e.preventDefault();
-    openEditModal(editId);
-  }
-});
+          <div class="form-field">
+            <label for="nameInput">Nombre del sitio</label>
+            <input id="nameInput" placeholder="Ej. Shopify ProKicks" required autocomplete="off">
+          </div>
 
-// Doble clic en el nombre también abre la edición completa
-document.getElementById('list').addEventListener('dblclick', e => {
-  const nameEl = e.target.closest('.fav-name');
-  if (!nameEl) return;
-  const item = nameEl.closest('.fav-item');
-  if (!item) return;
-  e.preventDefault();
-  openEditModal(item.dataset.id);
-});
+          <div class="form-field">
+            <label for="urlInput">URL completa</label>
+            <input id="urlInput" placeholder="https://ejemplo.com" type="url" required autocomplete="off">
+          </div>
 
-// Modal
-const modal = document.getElementById('addModal');
-let editingId = null;
+          <div class="form-field">
+            <label for="categoryInput">Categoría</label>
+            <select id="categoryInput">
+              <option value="Operación diaria">Operación diaria</option>
+              <option value="Clientes & proyectos">Clientes & proyectos</option>
+              <option value="IA & productividad">IA & productividad</option>
+              <option value="Marketing & contenido">Marketing & contenido</option>
+              <option value="Webs & tecnología">Webs & tecnología</option>
+              <option value="Administración">Administración</option>
+              <option value="Archivo inteligente">Archivo inteligente</option>
+            </select>
+          </div>
 
-function openAddModal() {
-  editingId = null;
-  document.getElementById('modalTitle').textContent = 'Nuevo favorito';
-  document.getElementById('modalSubtitle').textContent = 'Se agrega ordenado automáticamente A–Z';
-  document.getElementById('saveLink').textContent = 'Guardar favorito';
-  document.getElementById('inp-name').value = '';
-  document.getElementById('inp-url').value = '';
-  modal.showModal();
-  setTimeout(() => document.getElementById('inp-name').focus(), 50);
-}
+          <div class="form-field">
+            <label for="tagInput">Tag / Dominio (opcional)</label>
+            <input id="tagInput" placeholder="Ej. shopify.com" autocomplete="off">
+          </div>
 
-function openEditModal(id) {
-  const link = links.find(l => l.id === id);
-  if (!link) return;
-  editingId = id;
-  document.getElementById('modalTitle').textContent = 'Editar favorito';
-  document.getElementById('modalSubtitle').textContent = 'Modifica el nombre y/o el enlace del sitio';
-  document.getElementById('saveLink').textContent = 'Guardar cambios';
-  document.getElementById('inp-name').value = link.name;
-  document.getElementById('inp-url').value = link.url;
-  modal.showModal();
-  setTimeout(() => document.getElementById('inp-name').focus(), 50);
-}
+          <div class="form-actions">
+            <button type="submit" class="btn primary" style="flex:1;">Guardar favorito</button>
+            <button type="button" class="btn" id="resetForm">Limpiar</button>
+          </div>
+        </form>
+      </div>
 
-document.getElementById('openAdd').addEventListener('click', openAddModal);
-document.getElementById('closeModal').addEventListener('click', () => modal.close());
-document.getElementById('cancelModal').addEventListener('click', () => modal.close());
+      <!-- COLUMNA DERECHA: RESPALDOS Y HERRAMIENTAS -->
+      <div class="admin-card">
+        <h3>Respaldos & Sincronización</h3>
+        <div class="tools-stack">
 
-// Save
-document.getElementById('saveLink').addEventListener('click', () => {
-  const name = document.getElementById('inp-name').value.trim();
-  const url = document.getElementById('inp-url').value.trim();
-  if (!name) { document.getElementById('inp-name').focus(); return; }
-  if (!url || !/^https?:\/\//i.test(url)) {
-    alert('La URL debe empezar con https:// o http://');
-    document.getElementById('inp-url').focus();
-    return;
-  }
-  if (editingId) {
-    const link = links.find(l => l.id === editingId);
-    if (!link) return;
-    link.name = name;
-    link.url = url;
-    showToast(`"${name}" actualizado`);
-  } else {
-    links.push({ id: uid(), name, url });
-    showToast(`"${name}" agregado`);
-  }
-  save(links);
-  modal.close();
-  editingId = null;
-  render();
-});
+          <div class="tool-box">
+            <h4>Exportar para GitHub Pages</h4>
+            <p>Descarga el archivo <code>links.json</code> actualizado para subirlo a tu repositorio y guardar los cambios permanentemente.</p>
+            <button type="button" class="btn" id="exportBackup" style="width:100%;">
+              <span>📥</span> Descargar links.json
+            </button>
+          </div>
 
-// Enter en modal
-modal.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    document.getElementById('saveLink').click();
-  }
-  if (e.key === 'Escape') modal.close();
-});
+          <div class="tool-box">
+            <h4>Importar desde Chrome</h4>
+            <p>Sube el archivo <code>.html</code> exportado desde los marcadores de Chrome o cualquier navegador basado en Chromium.</p>
+            <input type="file" id="bookmarkImport" accept=".html,.htm">
+          </div>
 
-// Global ⌘K
-window.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-    e.preventDefault();
-    document.getElementById('search').focus();
-  }
-});
+          <div class="tool-box">
+            <h4>Restablecer valores</h4>
+            <p>Elimina los cambios guardados en el navegador y recarga los datos originales de <code>links.json</code>.</p>
+            <button type="button" class="btn danger" id="resetLocal" style="width:100%;">
+              <span>🔄</span> Restaurar original
+            </button>
+          </div>
 
-// Toast
-function showToast(msg, danger = false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (danger ? ' danger' : '');
-  void t.offsetWidth;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2400);
-}
+        </div>
+      </div>
 
-render();
-</script>
+    </div>
+
+    <!-- SECCIÓN INFERIOR: GESTIÓN DE ENLACES -->
+    <div class="admin-list-section">
+      <div class="admin-list-header">
+        <h3>Todos los favoritos guardados</h3>
+        <input class="admin-search-input" id="adminSearch" placeholder="Filtrar favoritos…" autocomplete="off">
+      </div>
+      <div class="admin-list" id="adminList"></div>
+    </div>
+  </dialog>
+
 </body>
 </html>
