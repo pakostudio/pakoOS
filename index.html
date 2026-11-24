@@ -7,6 +7,7 @@
   <meta name="description" content="Sistema personal de favoritos y Command Center listo para GitHub Pages.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2228%22 fill=%22%23183b56%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-size=%2255%22 font-weight=%22bold%22>P</text></svg>">
   <link rel="stylesheet" href="style.css">
+  <script src="cloud.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -24,6 +25,9 @@
       </div>
 
       <div class="header-actions">
+        <button type="button" class="cloud-pill" id="cloudStatusBtn" data-status="pending" aria-label="Estado de sincronización de favoritos">
+          <span class="cloud-dot" aria-hidden="true"></span><span class="cloud-status-text">Activar nube</span>
+        </button>
         <div class="timebox">
           <span id="dateText">cargando fecha...</span>
           <strong id="timeText">00:00</strong>
@@ -178,6 +182,25 @@
       </div>
       <div class="admin-list" id="adminList"></div>
     </div>
+  </dialog>
+
+  <!-- Acceso privado a Supabase: la contraseña nunca se incluye en el código -->
+  <dialog id="cloudLoginDialog" class="cloud-dialog" aria-labelledby="cloudDialogTitle">
+    <h2 id="cloudDialogTitle">Tus favoritos, sincronizados</h2>
+    <p id="cloudAccountHint">Inicia sesión con tu cuenta PAKO para guardar y recuperar tus cambios en Mac, iPhone y otros dispositivos.</p>
+    <form id="cloudLoginForm" class="cloud-login-form">
+      <label for="cloudEmail">Correo de tu cuenta PAKO</label>
+      <input id="cloudEmail" type="email" value="pako@sportcstudio.com" autocomplete="username" required>
+      <label for="cloudPassword">Contraseña de tu cuenta Supabase</label>
+      <input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
+      <p id="cloudError" class="cloud-error" role="alert" aria-live="polite"></p>
+      <button id="cloudLoginBtn" type="submit" class="btn primary">Entrar y sincronizar</button>
+    </form>
+    <div class="cloud-dialog-actions">
+      <button type="button" class="btn" id="cloudCloseBtn">Cerrar</button>
+      <button type="button" class="btn" id="cloudLogoutBtn" hidden>Cerrar sesión</button>
+    </div>
+    <p class="cloud-security-note">Los enlaces se guardan en una base de datos privada. GitHub y Vercel mantienen el código del sitio.</p>
   </dialog>
 
 </body>
