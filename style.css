@@ -931,3 +931,20 @@ dialog.modal::backdrop {
   .cloud-pill { min-height: 34px; padding: 7px 9px; font-size: 11px; }
   .cloud-dialog { padding: 20px; }
 }
+
+@media (max-width: 640px) {
+  .header-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    width: 100%;
+    gap: 8px;
+    align-items: center;
+  }
+  .header-actions .cloud-pill { grid-column: 1; grid-row: 1; width: 100%; justify-content: center; }
+  .header-actions .timebox {
+    grid-column: 2; grid-row: 1; width: 100%;
+    box-sizing: border-box; padding: 5px 8px; text-align: center;
+  }
+  .header-actions #quickAddBtn { grid-column: 1; grid-row: 2; width: 100%; justify-content: center; }
+  .header-actions #adminBtn { grid-column: 2; grid-row: 2; width: 100%; justify-content: center; }
+}
