@@ -184,23 +184,21 @@
     </div>
   </dialog>
 
-  <!-- Acceso privado a Supabase: la contraseña nunca se incluye en el código -->
+  <!-- Acceso privado con cuenta Google ya vinculada al usuario PAKO -->
   <dialog id="cloudLoginDialog" class="cloud-dialog" aria-labelledby="cloudDialogTitle">
     <h2 id="cloudDialogTitle">Tus favoritos, sincronizados</h2>
-    <p id="cloudAccountHint">Inicia sesión con tu cuenta PAKO para guardar y recuperar tus cambios en Mac, iPhone y otros dispositivos.</p>
-    <form id="cloudLoginForm" class="cloud-login-form">
-      <label for="cloudEmail">Correo de tu cuenta PAKO</label>
-      <input id="cloudEmail" type="email" value="pako@sportcstudio.com" autocomplete="username" required>
-      <label for="cloudPassword">Contraseña de tu cuenta PAKO</label>
-      <input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
+    <p id="cloudAccountHint">Accede con tu cuenta de Google para guardar tus favoritos de forma privada en tu Mac y iPhone.</p>
+    <div id="cloudLoginForm" class="cloud-login-form">
+      <p class="cloud-login-email">Cuenta: <strong>pako@sportcstudio.com</strong></p>
+      <button id="cloudGoogleBtn" type="button" class="btn primary">Continuar con Google</button>
       <p id="cloudError" class="cloud-error" role="alert" aria-live="polite"></p>
-      <button id="cloudLoginBtn" type="submit" class="btn primary">Entrar y sincronizar</button>
-    </form>
+      <p class="cloud-login-help">No necesitas crear ni recordar otra contraseña.</p>
+    </div>
     <div class="cloud-dialog-actions">
       <button type="button" class="btn" id="cloudCloseBtn">Cerrar</button>
       <button type="button" class="btn" id="cloudLogoutBtn" hidden>Cerrar sesión</button>
     </div>
-    <p class="cloud-security-note">Los enlaces se guardan en una base de datos privada. GitHub y Vercel mantienen el código del sitio.</p>
+    <p class="cloud-security-note">Tus enlaces se guardan en una base de datos privada. GitHub y Vercel mantienen el código del sitio.</p>
   </dialog>
 
 </body>
