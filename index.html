@@ -81,7 +81,7 @@
     <!-- FOOTER -->
     <footer>
       <div>PAKO OS · Diseñado para alto rendimiento y operación diaria</div>
-      <div>Guardado en tu navegador · Exportable a GitHub Pages</div>
+      <div>Favoritos sincronizados con Supabase · Código en GitHub y Vercel</div>
     </footer>
 
   </div>
@@ -94,7 +94,7 @@
     <div class="modal-head">
       <div>
         <h2>Panel de Control</h2>
-        <p>Administra enlaces, realiza respaldos y sincroniza con GitHub Pages.</p>
+        <p>Administra enlaces y respaldos, con guardado automático en la nube.</p>
       </div>
       <button class="btn-close" id="closeAdmin" title="Cerrar">✕</button>
     </div>
@@ -148,8 +148,8 @@
         <div class="tools-stack">
 
           <div class="tool-box">
-            <h4>Exportar para GitHub Pages</h4>
-            <p>Descarga el archivo <code>links.json</code> actualizado para subirlo a tu repositorio y guardar los cambios permanentemente.</p>
+            <h4>Exportar respaldo JSON</h4>
+            <p>Descarga una copia independiente de tus favoritos. Los cambios se guardan automáticamente en Supabase.</p>
             <button type="button" class="btn" id="exportBackup" style="width:100%;">
               <span>📥</span> Descargar links.json
             </button>
@@ -163,7 +163,7 @@
 
           <div class="tool-box">
             <h4>Restablecer valores</h4>
-            <p>Elimina los cambios guardados en el navegador y recarga los datos originales de <code>links.json</code>.</p>
+            <p>Restablece los favoritos originales en todos tus dispositivos. Esta acción también se guarda en la nube.</p>
             <button type="button" class="btn danger" id="resetLocal" style="width:100%;">
               <span>🔄</span> Restaurar original
             </button>
@@ -191,7 +191,7 @@
     <form id="cloudLoginForm" class="cloud-login-form">
       <label for="cloudEmail">Correo de tu cuenta PAKO</label>
       <input id="cloudEmail" type="email" value="pako@sportcstudio.com" autocomplete="username" required>
-      <label for="cloudPassword">Contraseña de tu cuenta Supabase</label>
+      <label for="cloudPassword">Contraseña de tu cuenta PAKO</label>
       <input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña" required>
       <p id="cloudError" class="cloud-error" role="alert" aria-live="polite"></p>
       <button id="cloudLoginBtn" type="submit" class="btn primary">Entrar y sincronizar</button>
