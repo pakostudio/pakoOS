@@ -887,3 +887,47 @@ dialog.modal::backdrop {
     text-align: center;
   }
 }
+
+
+/* PAKO OS — secure cloud synchronization */
+.cloud-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 39px; padding: 8px 12px;
+  border: 1px solid #cbdfea; border-radius: 12px;
+  background: #fff; color: #23415c; font-size: 12px;
+  font-weight: 700; cursor: pointer; white-space: nowrap;
+}
+.cloud-pill:hover { border-color: #87adca; }
+.cloud-pill .cloud-dot {
+  display: inline-block; width: 8px; height: 8px;
+  background: #d59b37; border-radius: 100%; flex-shrink: 0;
+}
+.cloud-pill[data-status="ok"] .cloud-dot { background: #209b67; }
+.cloud-pill[data-status="saving"] .cloud-dot { background: #4a85ce; }
+.cloud-pill[data-status="pending"] .cloud-dot { background: #d59b37; }
+.cloud-dialog {
+  width: min(430px, calc(100vw - 28px)); max-height: 90vh;
+  padding: 27px; border: 1px solid #d1e1ea; border-radius: 20px;
+  background: #fff; color: #173b56; box-shadow: 0 20px 65px rgba(10,40,60,.2);
+}
+.cloud-dialog::backdrop { background: rgba(15,34,51,.48); }
+.cloud-dialog h2 { font-size: 21px; margin: 0 0 9px; }
+.cloud-dialog > p { font-size: 13px; color: #52677c; line-height: 1.5; }
+.cloud-login-form { display: flex; flex-direction: column; gap: 8px; margin-top: 21px; }
+.cloud-login-form[hidden] { display: none; }
+.cloud-login-form label { color: #304d65; font-size: 12px; font-weight: 700; }
+.cloud-login-form input {
+  box-sizing: border-box; display: block; width: 100%; min-height: 44px;
+  margin: 0 0 10px; border: 1px solid #cbdfea; border-radius: 9px;
+  background: #fff; color: #183b55; padding: 11px 12px; font-size: 14px;
+}
+.cloud-login-form input:focus { outline: 2px solid #80b5db; outline-offset: 1px; }
+.cloud-login-form .btn { justify-content: center; min-height: 42px; }
+.cloud-error { min-height: 0; margin: 0; font-size: 12px; color: #bb3b3b; }
+.cloud-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.cloud-dialog-actions .btn { padding: 9px 13px; }
+.cloud-dialog .cloud-security-note { margin: 20px 0 0; font-size: 11px; }
+@media (max-width: 760px) {
+  .cloud-pill { min-height: 34px; padding: 7px 9px; font-size: 11px; }
+  .cloud-dialog { padding: 20px; }
+}
