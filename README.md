@@ -20,7 +20,7 @@ La edición de un favorito **no crea un commit** en GitHub: se guarda directamen
 ## Uso
 
 1. Entra a https://pako-os.vercel.app/.
-2. Pulsa **Activar nube** y utiliza la cuenta PAKO vinculada a Supabase Auth. La sesión permanece guardada en cada dispositivo hasta que expire o se cierre.
+2. Pulsa **Activar nube → Continuar con Google** y elige **pako@sportcstudio.com** (cuenta de Google vinculada a Supabase). No necesitas contraseña de PAKO OS. La sesión permanece guardada en cada dispositivo hasta que expire o se cierre.
 3. Utiliza **Agregar**, **Panel Admin**, importar favoritos de Chrome o editar/eliminar desde las tarjetas.
 4. El indicador superior confirma **Guardado en nube** después de cada escritura. Si no hay conexión, muestra **guardado pendiente**; al recuperarse internet se reintenta.
 5. Al abrir PAKO OS en otro dispositivo con la misma cuenta, carga los datos más recientes. Cuando la página está visible comprueba nuevas revisiones aproximadamente cada 30 segundos.
