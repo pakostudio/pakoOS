@@ -56,16 +56,10 @@
     const message = document.getElementById("cloudError");
     if (message) message.textContent = msg || "";
     if (modal && !modal.open) modal.showModal();
-    if (userId) {
-      const password = document.getElementById("cloudPassword");
-      if (password) password.value = "";
-    }
   }
   function closeLogin() {
     const modal = document.getElementById("cloudLoginDialog");
     if (modal && modal.open) modal.close();
-    const password = document.getElementById("cloudPassword");
-    if (password) password.value = "";
   }
 
   async function call(path, options) {
@@ -130,6 +124,11 @@
   async function getUser() {
     const user = await authorized("/auth/v1/user");
     if (!user || !user.id) throw new Error("No se pudo validar la cuenta.");
+    if (String(user.email || "").toLowerCase() !== "pako@sportcstudio.com") {
+      const err = new Error("Selecciona la cuenta Google pako@sportcstudio.com.");
+      err.status = 403;
+      throw err;
+    }
     return user;
   }
   function endpoint(suffix) {
@@ -309,33 +308,49 @@
     }
   }
 
-  async function login(event) {
-    event.preventDefault();
-    const email = document.getElementById("cloudEmail").value.trim().toLowerCase();
-    const password = document.getElementById("cloudPassword").value;
-    const message = document.getElementById("cloudError");
-    const button = document.getElementById("cloudLoginBtn");
-    if (message) message.textContent = "";
-    if (button) { button.disabled = true; button.textContent = "Conectando…"; }
+  function loginWithGoogle() {
+    const el = document.getElementById("cloudGoogleBtn");
+    if (el) { el.disabled = true; el.textContent = "Conectando con Google…"; }
+    const redirect = new URL("/", location.origin).href;
+    const authorize = API + "/auth/v1/authorize?" + new URLSearchParams({
+      provider: "google", redirect_to: redirect
+    }).toString();
+    location.assign(authorize);
+  }
+
+  function consumeAuthCallback() {
+    // Supabase OAuth (implicit flow) returns short-lived credentials after
+    // Google consent. Immediately remove them from the visible URL.
+    const hash = location.hash && location.hash.charAt(0) === "#"
+      ? new URLSearchParams(location.hash.slice(1)) : null;
+    if (!hash) return null;
+    const error = hash.get("error_description") || hash.get("error");
+    const access = hash.get("access_token");
+    const refresh = hash.get("refresh_token");
+    if (!error && !access) return null;
+    history.replaceState(null, "", location.pathname + location.search);
+    if (error) return decodeURIComponent(error.replace(/\+/g, " "));
+    if (!access || !refresh) return "Google no devolvió una sesión completa.";
     try {
-      const data = await call("/auth/v1/token?grant_type=password", {
-        method: "POST",
-        body: { email: email, password: password }
+      updateSession({
+        access_token: access,
+        refresh_token: refresh,
+        expires_in: Number(hash.get("expires_in") || 3600)
       });
-      updateSession(data);
-      const user = await getUser();
-      userId = user.id;
-      await openWorkspace();
+      return null;
     } catch (err) {
-      if (message) message.textContent = errorMessage(err);
-      status("Conexión pendiente", "pending");
-    } finally {
-      if (button) { button.disabled = false; button.textContent = "Entrar y sincronizar"; }
-      document.getElementById("cloudPassword").value = "";
+      return errorMessage(err);
     }
   }
+
   async function restoreSession() {
+    const authError = consumeAuthCallback();
     session = localGet(SESSION_KEY);
+    if (authError) {
+      status("Acceso pendiente", "pending");
+      showLogin(authError);
+      return;
+    }
     if (!session) {
       status("Activar nube", "pending");
       return;
@@ -346,12 +361,13 @@
       await openWorkspace();
     } catch (err) {
       // Don't destroy credentials or pending work for transient network errors.
-      if (err.status === 401 || /refresh token|invalid jwt/i.test(errorMessage(err))) {
+      if (err.status === 401 || err.status === 403 || /refresh token|invalid jwt/i.test(errorMessage(err))) {
         session = null;
         userId = null;
         localRemove(SESSION_KEY);
         ready = false;
         status("Volver a entrar", "pending");
+        if (err.status === 403) showLogin(errorMessage(err));
       } else {
         status("Nube temporalmente inaccesible", "pending");
       }
@@ -376,11 +392,11 @@
   function canEdit() { return Boolean(userId && ready); }
   async function init(config) {
     handlers = config;
-    const form = document.getElementById("cloudLoginForm");
+    const googleButton = document.getElementById("cloudGoogleBtn");
     const statusButton = document.getElementById("cloudStatusBtn");
     const logoutButton = document.getElementById("cloudLogoutBtn");
     const closeButton = document.getElementById("cloudCloseBtn");
-    if (form) form.addEventListener("submit", login);
+    if (googleButton) googleButton.addEventListener("click", loginWithGoogle);
     if (closeButton) closeButton.addEventListener("click", closeLogin);
     if (statusButton) statusButton.addEventListener("click", function () { showLogin(); });
     if (logoutButton) logoutButton.addEventListener("click", logout);
