@@ -42,6 +42,8 @@
     if (hint) hint.textContent = userId ? "Sesión activa · los cambios se guardan en Supabase" : "Tu cuenta mantiene los favoritos sincronizados entre dispositivos.";
     const logout = document.getElementById("cloudLogoutBtn");
     if (logout) logout.hidden = !userId;
+    const loginForm = document.getElementById("cloudLoginForm");
+    if (loginForm) loginForm.hidden = !!userId;
   }
   function errorMessage(err) {
     const s = err && err.message ? err.message : String(err || "Error desconocido");
@@ -288,6 +290,25 @@
     }
   }
 
+  async function pullIfNew() {
+    if (!ready || !userId || saving || document.hidden) return;
+    try {
+      const row = await readWorkspace();
+      if (!row || Number(row.revision) <= cloudRevision) return;
+      cloudBase = copy(row.config);
+      cloudRevision = Number(row.revision);
+      if (pending) {
+        status("Actualizando cambios…", "saving");
+        scheduleSave(0);
+      } else {
+        applyCloud(row.config);
+        status("Actualizado entre dispositivos", "ok");
+      }
+    } catch (err) {
+      if (pending) status("Sin conexión · guardado pendiente", "pending");
+    }
+  }
+
   async function login(event) {
     event.preventDefault();
     const email = document.getElementById("cloudEmail").value.trim().toLowerCase();
@@ -299,7 +320,7 @@
     try {
       const data = await call("/auth/v1/token?grant_type=password", {
         method: "POST",
-        body: { email: email, password: password, gotrue_meta_security: {} }
+        body: { email: email, password: password }
       });
       updateSession(data);
       const user = await getUser();
@@ -358,11 +379,15 @@
     const form = document.getElementById("cloudLoginForm");
     const statusButton = document.getElementById("cloudStatusBtn");
     const logoutButton = document.getElementById("cloudLogoutBtn");
+    const closeButton = document.getElementById("cloudCloseBtn");
     if (form) form.addEventListener("submit", login);
+    if (closeButton) closeButton.addEventListener("click", closeLogin);
     if (statusButton) statusButton.addEventListener("click", function () { showLogin(); });
     if (logoutButton) logoutButton.addEventListener("click", logout);
-    window.addEventListener("online", function () { if (pending) scheduleSave(0); else if (session && !ready) restoreSession(); });
-    document.addEventListener("visibilitychange", function () { if (!document.hidden && pending) scheduleSave(0); });
+    window.addEventListener("online", function () { if (pending) scheduleSave(0); else if (session && !ready) restoreSession(); else pullIfNew(); });
+    window.addEventListener("focus", function () { if (session && !ready) restoreSession(); else pullIfNew(); });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) { if (pending) scheduleSave(0); else pullIfNew(); } });
+    setInterval(pullIfNew, 30000);
     await restoreSession();
   }
   window.PakoCloud = {
