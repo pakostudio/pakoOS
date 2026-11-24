@@ -153,15 +153,28 @@ async function boot() {
 
   renderAll();
   bindEvents();
+  if (window.PakoCloud) {
+    await window.PakoCloud.init({
+      baseConfig: JSON.parse(JSON.stringify(baseConfig || state.config)),
+      getConfig: () => state.config,
+      setConfig: cfg => { state.config = cfg; renderAll(); }
+    });
+  }
 }
 
 function persist() {
+  if (!window.PakoCloud || !window.PakoCloud.canEdit()) {
+    window.PakoCloud?.loginDialog("Inicia sesión para guardar tus cambios de forma segura.");
+    return false;
+  }
   try {
     localStorage.setItem(CONFIG_KEY, JSON.stringify(state.config));
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.config.links));
   } catch (e) {
-    console.error("Error guardando en localStorage:", e);
+    console.warn("Respaldo local no disponible:", e);
   }
+  window.PakoCloud.queueSave(state.config);
+  return true;
 }
 
 // ── RENDER ──
@@ -201,7 +214,7 @@ function renderQuick() {
   items.forEach(item => {
     const a = document.createElement("a");
     a.className = "quick-link";
-    a.href = item.url;
+    a.href = /^https?:\/\//i.test(item.url || "") ? item.url : "#";
     a.target = "_blank";
     a.rel = "noopener noreferrer";
 
@@ -283,11 +296,12 @@ function renderCards() {
       itemEl.dataset.id = link.id;
 
       const favUrl = getFaviconUrl(link.url);
+      const safeUrl = /^https?:\/\//i.test(link.url || "") ? link.url : "#";
       const tagText = link.tag || domain(link.url);
-      const initial = (link.name || "P").charAt(0).toUpperCase();
+      const initial = (link.name || "P").trim().charAt(0).toUpperCase().replace(/[^A-Z0-9]/g, "P");
 
       itemEl.innerHTML = `
-        <a class="fav-main" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">
+        <a class="fav-main" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">
           <div class="fav-favicon">
             <img src="${escapeHtml(favUrl)}" alt="" loading="lazy" onerror="this.parentElement.textContent='${initial}'">
           </div>
@@ -298,7 +312,7 @@ function renderCards() {
         </a>
         <div class="fav-actions">
           <button class="action-btn edit" data-edit="${escapeHtml(link.id)}" title="Editar favorito">✏️</button>
-          <a class="action-btn" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer" title="Abrir en pestaña nueva">↗</a>
+          <a class="action-btn" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer" title="Abrir en pestaña nueva">↗</a>
           <button class="action-btn del" data-del="${escapeHtml(link.id)}" title="Eliminar favorito">✕</button>
         </div>
       `;
@@ -362,6 +376,7 @@ function resetForm() {
 }
 
 function openEditModal(id) {
+  if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
   const link = (state.config.links || []).find(l => l.id === id);
   if (!link) return;
 
@@ -381,6 +396,7 @@ function openEditModal(id) {
 }
 
 function deleteLink(id) {
+  if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
   const link = (state.config.links || []).find(l => l.id === id);
   if (!link) return;
 
@@ -404,6 +420,7 @@ function exportBackup() {
 }
 
 function importBookmarks(file) {
+  if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
   const reader = new FileReader();
   reader.onload = () => {
     try {
@@ -472,6 +489,7 @@ function bindEvents() {
   const adminBtn = document.getElementById("adminBtn");
   if (adminBtn) {
     adminBtn.addEventListener("click", () => {
+      if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
       resetForm();
       modal.showModal();
       renderAdminList();
@@ -482,6 +500,7 @@ function bindEvents() {
   const quickAddBtn = document.getElementById("quickAddBtn");
   if (quickAddBtn) {
     quickAddBtn.addEventListener("click", () => {
+      if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
       resetForm();
       modal.showModal();
       renderAdminList();
@@ -509,10 +528,14 @@ function bindEvents() {
   const resetLocalBtn = document.getElementById("resetLocal");
   if (resetLocalBtn) {
     resetLocalBtn.addEventListener("click", () => {
-      if (!confirm("Esto eliminará cambios locales en este navegador y restaurará la configuración base de links.json. ¿Continuar?")) return;
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(CONFIG_KEY);
-      location.reload();
+      if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
+      if (!confirm("Esto reemplazará tus favoritos sincronizados con los originales del repositorio en TODOS tus dispositivos. ¿Continuar?")) return;
+      fetch("./links.json").then(r => r.json()).then(cfg => {
+        state.config = cfg;
+        persist();
+        renderAll();
+        showToast("Restauración enviada a la nube");
+      }).catch(err => showToast("No fue posible restaurar: " + err.message, true));
     });
   }
 
@@ -569,6 +592,7 @@ function bindEvents() {
   if (linkForm) {
     linkForm.addEventListener("submit", e => {
       e.preventDefault();
+      if (!window.PakoCloud?.canEdit()) { window.PakoCloud?.loginDialog(); return; }
       const id = document.getElementById("linkId").value || uid();
       const name = document.getElementById("nameInput").value.trim();
       let url = document.getElementById("urlInput").value.trim();
